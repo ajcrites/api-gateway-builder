@@ -1,0 +1,5 @@
+aws_profile="default"
+aws_region="us-east-1"
+deploy_user="USER"
+prefix="USER"
+env="local"
