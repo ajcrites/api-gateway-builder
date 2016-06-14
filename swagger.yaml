@@ -114,8 +114,7 @@ definitions:
         items:
           $ref: "#/definitions/Tag"
       VoteCount:
-        type: number
-        format: int64
+        type: integer
 
   Tag:
     required:
