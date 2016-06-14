@@ -1,0 +1,135 @@
+swagger: "2.0"
+info:
+  title: "API Infra Test"
+  version: "0.0.0"
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /image:
+    post:
+      parameters:
+        - name: image
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Image"
+      responses:
+        201:
+          description: "create image"
+          schema:
+            $ref: "#/definitions/Image"
+        409:
+          description: "duplicate image"
+
+  /image/{Id}:
+    get:
+      parameters:
+       - name: Id
+         in: path
+         required: true
+         type: string
+      responses:
+        200:
+          description: "get image by id"
+          schema:
+            $ref: "#/definitions/Image"
+        404:
+          description: "missing image"
+
+  /tag:
+    put:
+      parameters:
+        - name: tag
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Tag"
+      responses:
+        201:
+          description: "create tag"
+          schema:
+            $ref: "#/definitions/Tag"
+    get:
+      responses:
+        200:
+          description: "get tag list"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Tag"
+
+  /tag/{Id}:
+    get:
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: "get tag"
+          schema:
+            $ref: "#/definitions/Tag"
+        404:
+          description: "missing tag"
+
+  /image/{Id}/tag:
+    put:
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          type: string
+        - name: tagimage
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/TagImage"
+      responses:
+        200:
+          description: "tag image"
+          schema:
+            $ref: "#/definitions/Image"
+        400:
+          description: "invalid tag or other"
+        404:
+          description: "missing image"
+
+definitions:
+  Image:
+    required:
+      - Id
+      - Url
+    properties:
+      Id:
+        type: string
+      Url:
+        type: string
+      Tags:
+        type: array
+        items:
+          $ref: "#/definitions/Tag"
+      VoteCount:
+        type: number
+        format: int64
+
+  Tag:
+    required:
+      - Tag
+    properties:
+      Tag:
+        type: string
+
+  TagImage:
+    required:
+      - Tag
+      - ImageId
+    properties:
+      Tag:
+        type: string
+      ImageId:
+        type: string

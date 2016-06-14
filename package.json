@@ -1,0 +1,14 @@
+{
+  "name": "api-gateway-builder",
+  "version": "1.0.0",
+  "description": "This is a project that was constructed to do the following:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "yaml2json": "git://github.com/ajcrites/yaml2json"
+  }
+}
