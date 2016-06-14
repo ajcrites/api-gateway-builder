@@ -139,4 +139,19 @@ resource "aws_iam_role_policy" "lambda_app_router_policy" {
   ]
 }
 EOF
+
+  provisioner "local-exec" {
+    command = <<EOF
+      ROLE=${aws_iam_role.lambda_app_router.arn} \
+      APP_PREFIX=${var.prefix} \
+      AWS_REGION=${var.aws_region} \
+      AWS_PROFILE=${var.aws_profile} \
+      IMAGE_S3_BUCKET=${aws_s3_bucket.images.id} \
+      provision/lambda.sh
+EOF
+  }
+}
+
+resource "aws_api_gateway_rest_api" "api" {
+  name = "${var.prefix}infratest_api"
 }
