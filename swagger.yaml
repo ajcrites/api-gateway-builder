@@ -1,6 +1,7 @@
 swagger: "2.0"
 info:
   title: "API Infra Test"
+  description: "Testing automation of full Serverless Infra deployment"
   version: "0.0.0"
 schemes:
 - https

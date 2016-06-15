@@ -75,7 +75,7 @@ resource "aws_dynamodb_table" "tags" {
 }
 
 resource "aws_iam_role" "lambda_app_router" {
-  name = "${var.prefix}lambda_app_router_role"
+  name = "${var.prefix}lambda_app_router"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -93,7 +93,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "lambda_app_router_policy" {
-  name = "${var.prefix}lambda_app_router_policy"
+  name = "${var.prefix}lambda_app_router"
   role = "${aws_iam_role.lambda_app_router.id}"
   policy = <<EOF
 {
@@ -140,6 +140,8 @@ resource "aws_iam_role_policy" "lambda_app_router_policy" {
 }
 EOF
 
+  # This can be done by the deployment script, but it's done here just to show
+  # terraform provisioners
   provisioner "local-exec" {
     command = <<EOF
       ROLE=${aws_iam_role.lambda_app_router.arn} \
@@ -150,8 +152,4 @@ EOF
       provision/lambda.sh
 EOF
   }
-}
-
-resource "aws_api_gateway_rest_api" "api" {
-  name = "${var.prefix}infratest_api"
 }

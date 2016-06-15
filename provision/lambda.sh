@@ -2,7 +2,7 @@
 
 PROJECT_JSON=$(cat <<EOF
 {
-    "name": "app_router",
+    "name": "${APP_PREFIX}app_router",
     "role": "$ROLE",
     "memory": 128,
     "runtime": "nodejs4.3",
