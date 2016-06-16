@@ -7,7 +7,7 @@ process.stdin.on("end", () => {
     const routes = JSON.parse(json);
     routes.items.filter(item => item.resourceMethods).map(item => {
         Object.keys(item.resourceMethods).map(method =>
-            console.log(`--resource-id ${item.id} --http-method ${method} --integration-http-method ${method}`)
+            console.log(`--resource-id ${item.id} --http-method ${method}`)
         );
     });
 });

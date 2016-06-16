@@ -35,16 +35,15 @@ IFS="
 # `build-integrations-for-resrouces` creates flags with the resource ID and
 # method so that we can hook up the integration URI (our router lambda)
 for resource in $(./build-integrations-for-resources.js < api-resources.json); do
-    #aws --region "$AWS_REGION" --profile "$AWS_PROFILE" \
-        #lambda add-permission --function-name $lambda_function_name \
-        #--statement-id $(node_modules/.bin/uuid) \
-        #--action "lambda:InvokeFunction" \
-        #--principal "apigateway.amazonaws.com" \
-        #--source-arn "arn:aws:execute-api:${AWS_REGION}:${aws_account_id}:${rest_api_id}/*"
-
     eval aws --region "$AWS_REGION" --profile "$AWS_PROFILE" apigateway put-integration \
-        --rest-api-id $rest_api_id $resource --type AWS \
+        --rest-api-id $rest_api_id $resource --type AWS --integration-http-method POST \
         --uri "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/${apex_function_router}/invocations"
+    eval aws --region "$AWS_REGION" --profile "$AWS_PROFILE" apigateway get-method \
+        --rest-api-id $rest_api_id $resource > method-detail.json
+    eval aws --region "$AWS_REGION" --profile "$AWS_PROFILE" apigateway put-integration-response \
+        --rest-api-id $rest_api_id $resource --status-code $(./get-earliest-status-code.js < method-detail.json) \
+        --selection-pattern "''"
+    rm method-detail.json
 done
 IFS="$OLDIFS"
 rm api-resources.json
@@ -54,4 +53,4 @@ aws --region "$AWS_REGION" --profile "$AWS_PROFILE" \
    --statement-id $(node_modules/.bin/uuid) \
    --action "lambda:InvokeFunction" \
    --principal "apigateway.amazonaws.com" \
-   --source-arn "arn:aws:execute-api:us-east-1:293313708031:${rest_api_id}/*/GET/tag"
+   --source-arn "arn:aws:execute-api:us-east-1:293313708031:${rest_api_id}/*"

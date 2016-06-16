@@ -1,4 +1,4 @@
-laasddizl1
+#!/bin/bash -e
 
 export AWS_PROFILE=${AWS_PROFILE-"default"}
 export AWS_REGION=${AWS_REGION-"us-east-1"}
