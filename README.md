@@ -8,6 +8,23 @@ This is a project that was constructed to do the following:
 * Include a node.js router that allows for local testing of
  the app router code so it can be done without deploying
 
+This project exists as a discovery and teaching tool. It
+was not built to serve the purpose of a particular project,
+but individual projects can use this as a guide to serve
+their own specific needs.
+
+API Gateway Builder seeks to represent a project that is a
+pure IaC solution with no manual / physical management of
+architecture at all. Creation, maintenance, and destruction
+of infrastructure can be maintained as code consistently
+and each can be done with a minimal number of commands that
+can naturally be integrated continuously.
+
+This project also seeks to provide examples of how to build
+infrastructure for development and avoiding some of the
+pitfalls required with server(less) development to include
+simulating infrastructure deployments locally.
+
 ## Installation Instructions
 Install the following if you do not have them:
 
